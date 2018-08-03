@@ -12,7 +12,7 @@ Some of the more common ones:
   * [Can be run via docker](https://www.elastic.co/guide/en/logstash/current/docker-config.html)
 * [Fluentd](https://github.com/fluent/fluentd) - Ruby based log sender
   * Possible with the fluent-plugin-gelf forks.
-  * See [tutorial](/Metrics-Monitoring/fluentd/fluentd.md) in this repo
+  * See [tutorial](/Metrics-Monitoring/fluentd/fluentd-gelf/README.md) in this repo
 
 # Enable a syslog input
 The easiest way to get logs into graylog is to enable an [input on graylog](docs.graylog.org/en/latest/pages/sending_data.html).

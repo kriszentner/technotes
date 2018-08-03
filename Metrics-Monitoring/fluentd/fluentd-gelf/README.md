@@ -25,10 +25,10 @@ drwxr-xr-x 2 syslog adm 4096 Aug  2 00:00 /var/log/chef
 
 
 # Build a fluentd-gelf container
-The files in the [fluentd-gelf](fluentd-gelf/) directory are a good start. You're best off if you copy that directory to the host you're building your container in.
+The files in the this directory are a good start. You're best off if you copy that directory to the host you're building your container in.
 
-You'll want to customize [Dockerfile](fluentd-gelf/Dockerfile) if needed.  
-The [run.sh](fluentd-gelf/run.sh) should include the path to your log file (in this case it's chef).
+You'll want to customize [Dockerfile](Dockerfile) if needed.  
+The [run.sh](run.sh) should include the path to your log file (in this case it's chef).
 
 You'll need to customize the [fluent.conf](fluent.conf) to include the address of your graylog server. You can also use this to customize which logs you wish to grok. In this case I've created a custom regex parser for the chef logs. Also, the run script expects this file to be in `/fluentd/etc/fluent_custom.conf` so it can be overriden. However, the Docker build script needs some sort of `fluent.conf` to be in here as the default.
 
