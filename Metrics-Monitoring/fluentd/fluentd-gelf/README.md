@@ -1,5 +1,5 @@
 # Introduction
-Let's give some basics on running fluentd. In this example we will spin put fluentd in a container, with the example of wanting it to sync a chef log.
+Let's give some basics on running fluentd. In this example we will put fluentd in a container, with the example of wanting it to sync a chef log.
 
 
 # The Task
@@ -39,6 +39,9 @@ Once you customize these files, it's as simple as running:
 ./build.sh
 ./run.sh
 ```
+
+# Running the Container
+In this example, fluentd is configured to log to stdout, and to graylog. FluentD logs don't use the `full_message` field as recommended in the [GELF spec](http://docs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification).
 
 # References
 Articles and Sites that made this possible
