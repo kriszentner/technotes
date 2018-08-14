@@ -1,5 +1,7 @@
 # Installation
-This will focus on the docker install showing other options as possibilities.
+This will focus on the docker install of the Graylog server, showing other options as possibilities.
+
+For Client input methods, see [log ingestion](log_ingestion.md)
 
 ## Chef
 Installation [with Chef](https://github.com/Graylog2/graylog2-cookbook) requires installing the following community cookbooks:
