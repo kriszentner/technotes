@@ -6,16 +6,24 @@ Some of the more common ones:
 * [GELF](http://docs.graylog.org/en/latest/pages/gelf.html) - Logstash's own structured format
 
 ## Client Tools
+For the following client tools, Logstash and Fluentd were the more heavy services, but also the most flexible. They could be run as a standalone service on each client, or a centralized service. Logstash was by far the heaviest service, and for this reason I didn't pursue a Logstash tutorial. NXLog had the least memory usage.
 * rsyslogd (standard on Ubuntu)
 * [Logstash](https://github.com/elastic/logstash) - From the competing ELK stack. Ruby based log sender.
   * [Can send to graylog via GELF](https://www.elastic.co/guide/en/logstash/current/plugins-outputs-gelf.html)
   * [Can be run via docker](https://www.elastic.co/guide/en/logstash/current/docker-config.html)
+  * In my tests, 520MB memory used in container. 700MB image.
 * [Fluentd](https://github.com/fluent/fluentd) - Ruby based log sender
   * Possible with the fluent-plugin-gelf forks.
   * See [tutorial](/Metrics-Monitoring/fluentd/fluentd-gelf/README.md) in this repo
+  * In my tests, the container uses about 50MB memory. 36MB image size.
+* [FluentBit](http://fluentbit.org)
+  * Should have GELF support in after [0.14](https://github.com/fluent/fluent-bit/pull/521) release.
+  * 7MB memory used in container. 83MB image size (Debian base)
 * [NXLog](https://nxlog.co) - C based log sender
   * Has a native GELF plugin. Similar configuration to Fluentd
   * See [tutorial](/Metrics-Monitoring/nxlog/nxlog-gelf-gelf/README.md) in this repo  
+  * In  my tests, container uses about 4MB memory, 196MB image size due to running Ubuntu instead of Alpine.
+
 
 # Enable a syslog input
 The easiest way to get logs into graylog is to enable an [input on graylog](docs.graylog.org/en/latest/pages/sending_data.html).

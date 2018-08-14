@@ -21,6 +21,7 @@ RUN apt-get update \
  && rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
  && chmod +x /usr/local/bin/gosu \
  && gosu nobody true
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY nxlog.conf /nxlog/etc/
 COPY entrypoint.sh /bin/

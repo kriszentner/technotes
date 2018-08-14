@@ -10,4 +10,5 @@ docker run \
   -v/var/log/chef:/fluentd/log/chef \
   -e FLUENTD_CONF=fluent_custom.conf \
   -e FLUENT_UID=$(id -u syslog) \
+  -p 5140:5140 \  
   -d fluentd-gelf
