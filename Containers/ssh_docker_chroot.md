@@ -59,7 +59,7 @@ session required     pam_exec.so /usr/local/bin/userlogin.sh
 For the container, you want something as minimal as you can make it. If you can get away with [busybox](https://hub.docker.com/_/busybox/), or [alpine](https://hub.docker.com/_/alpine/) you'll be better off. In this case I'm using Ubuntu which still provides a fairly minimalistic container. In this case, I'm allowing users to edit a file in their home directory with an editor of their choice. Much of the reason for this was that chrooting emacs isn't trivial, and my users really like emacs.
 
 ### Better security
-For your Dockerfile. If this is a container to lock down what users can do. It would be worthwhile to look into Linux Kernel Capabilities and drop ones as appropriate. Looking at the [capabilities(7)](http://man7.org/linux/man-pages/man7/capabilities.7.html) man page is a good place to start. As is this [primer on Docker security tuning](https://opensource.com/business/15/3/docker-security-tuning) and . You'll see in my `docker run` command below, I've restricted some default docker capabilities.
+For your Dockerfile. If this is a container to lock down what users can do, then it would be worthwhile to look into Linux Kernel Capabilities and drop ones as appropriate. Looking at the [capabilities(7)](http://man7.org/linux/man-pages/man7/capabilities.7.html) man page is a good place to start. As is this [primer on Docker security tuning](https://opensource.com/business/15/3/docker-security-tuning). You'll see in my `docker run` command below, I've restricted some default docker capabilities.
 
 `Dockerfile`
 ```Dockerfile
