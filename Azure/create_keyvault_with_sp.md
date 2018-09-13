@@ -35,7 +35,7 @@ ROLENAME="keyvaultreader"
 EXPIREYEAR=$(expr 9999 - $(date +%Y))
 az ad sp create-for-rbac --name $ROLENAME  --years $EXPIREYEAR
 ```
-This will create a service principal, if you're generating the password, note the password, or you'll have to change it later.
+This will create a service principal the the name in the `ROLENAME` variable. If you're generating the password, note the password, or you'll have to change it later.
 
 # Using a Managed Service Identity
 You can use an Azure Managed Service Identity (MSI) to access Keyvault as well. A Managed Identity in this case is a sort of credential/user that gets assigned to an Azure resource (in this case, an Azure VM).
@@ -45,7 +45,7 @@ If you didn't create your VM with an MSI, [you can assign it one](https://docs.m
 az vm identity assign -g myResourceGroup -n myVm
 ```
 
-# Assign Permissions to the Principal
+# Assign Permissions to the Vault to the Principal
 Notice the `get list` part. You can set many more permissions for secrets, keys and certs. See the references at the end of this doc.
 ```bash
 az keyvault set-policy \
@@ -55,7 +55,7 @@ az keyvault set-policy \
   --spn 22f4ef14-d742-442c-bb1c-a41a82c3cf0e
 ```
 
-# Assign Permissions to a VM with an MSI
+# Assign Permissions to the Vault on a VM with an MSI
 And here's how you do it with the MSI. You'll need to get the SPN (aka AppID or PrincipalId). In this case there's an embedded command to get the latter. This only works if your VM is on the same subscription as your AKV, otherwise you'll need to change subscription contexts before your `az vm identity` command.
 ```bash
 az keyvault set-policy \
@@ -64,7 +64,7 @@ az keyvault set-policy \
   --secret-permissions get list \
   --spn $(az vm identity show -g KZ-RG -n kz-ubuntutest|jq -r '.principalId')
 ```
-# Testing that your Service Principal works
+# Testing that your Service Principal can access the Vault
 You can test if this is working by creating a secret in your keyvault (I used `test`). Then log in. Be sure to fill in the app id, password, and tenant values below:
  ```bash
  az login --service-principal \
