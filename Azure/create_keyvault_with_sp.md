@@ -94,7 +94,7 @@ az keyvault create --name $VAULTNAME \
   --resource-group $RGNAME \
   --location $LOCATION
 # Principal Creation
-az ad sp create-for-rbac --name $ROLENAME --password "$mypass" --years $expireyear
+az ad sp create-for-rbac --name $ROLENAME --password "$PASSWORD" --years $expireyear
 SPN=$(az ad app list --display-name $ROLENAME|jq -r '.[].appId')
 # Set Policy
 az keyvault set-policy --name $VAULTNAME --resource-group $RGNAME --secret-permissions get list --spn $SPN
