@@ -28,7 +28,7 @@ az keyvault create --name 'MyKeyVault' \
   --location 'westus2'
 ```
 
-# Create your Principal
+# Using a Service Principal
 Now let's create a principal that we'll use to pull secrets from the vault. If you want to set your own password, you can use `--password "mysecretpass"` in the below command:
 ```
 ROLENAME="keyvaultreader"
@@ -37,14 +37,44 @@ az ad sp create-for-rbac --name $ROLENAME  --years $EXPIREYEAR
 ```
 This will create a service principal, if you're generating the password, note the password, or you'll have to change it later.
 
+# Using a Managed Service Identity
+You can use an Azure Managed Service Identity (MSI) to access Keyvault as well. A Managed Identity in this case is a sort of credential/user that gets assigned to an Azure resource (in this case, an Azure VM).
+
+If you didn't create your VM with an MSI, [you can assign it one](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm):
+```bash
+az vm identity assign -g myResourceGroup -n myVm
+```
+
 # Assign Permissions to the Principal
 Notice the `get list` part. You can set many more permissions for secrets, keys and certs. See the references at the end of this doc.
 ```bash
-az keyvault set-policy --name gcrchefvault --resource-group MSREngInfraExt --secret-permissions get list --spn 2347e503-3b37-42b3-902b-a503f2d4c488
+az keyvault set-policy \
+  --name MyKeyVault \
+  --resource-group MyVaultGroup \
+  --secret-permissions get list \
+  --spn 22f4ef14-d742-442c-bb1c-a41a82c3cf0e
 ```
 
+# Assign Permissions to a VM with an MSI
+And here's how you do it with the MSI. You'll need to get the SPN (aka AppID or PrincipalId). In this case there's an embedded command to get the latter. This only works if your VM is on the same subscription as your AKV, otherwise you'll need to change subscription contexts before your `az vm identity` command.
+```bash
+az keyvault set-policy \
+  --name MyKeyVault \
+  --resource-group MyVaultGroup \
+  --secret-permissions get list \
+  --spn $(az vm identity show -g KZ-RG -n kz-ubuntutest|jq -r '.principalId')
+```
+# Testing that your Service Principal works
+You can test if this is working by creating a secret in your keyvault (I used `test`). Then log in. Be sure to fill in the app id, password, and tenant values below:
+ ```bash
+ az login --service-principal \
+  -u 'd5da05cd-5855-40b7-b981-02360ad19564' \
+  -p '16858f8f-4b84-45ee-aecb-66091f136748' \
+  --tenant 'f11fe2ef-0b41-456a-a6bc-d1bf4c6de3f8'
+az keyvault secret show --name test --vault-name MyKeyVault
+```
 # Put it all together
-
+Here's a script that puts it all together if you're using a Service Principal
 ```bash
 #!/usr/bin/env bash
 SUBSCRIPTION="MyAzureSubscription"
@@ -69,6 +99,10 @@ SPN=$(az ad app list --display-name $ROLENAME|jq -r '.[].appId')
 # Set Policy
 az keyvault set-policy --name $VAULTNAME --resource-group $RGNAME --secret-permissions get list --spn $SPN
 ```
+
+
+
 # References
 [Manage Keyvault with CLI](https://docs.microsoft.com/en-us/azure/key-vault/key-vault-manage-with-cli2)  
-[Keyvault Documentation](https://docs.microsoft.com/en-us/cli/azure/keyvault) 
+[Keyvault Documentation](https://docs.microsoft.com/en-us/cli/azure/keyvault)  
+[Managed Identities on Azure VMs](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm)
