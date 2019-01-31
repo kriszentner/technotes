@@ -52,7 +52,9 @@ Features/Limitations:
   * 100TB vs 5TB
 
 When creating a storage account suitable for Azure Files. You'll need to ensure the below options are selected:
-![image.png](/.attachments/image-c26a2609-b8d9-45bd-a9d1-f8d1294bd2e6.png)
+* Performance: Standard
+* Replication: LRS
+* Access Tier: Hot
 
 #### Docker mount Azure Files with CIFS using Docker Plugin
 Replace:
