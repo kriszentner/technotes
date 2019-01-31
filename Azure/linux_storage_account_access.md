@@ -135,37 +135,38 @@ blobfuse /mnttest --tmp-path=/mnt/resource/blobfusetmp/$(hostname)  --config-fil
 * Using 100GB transfers as test cases
 * Reads/Writes using Azure VM ephemeral SSD disk (/mnt)
 
-**Native Baseline (Effectively copying from /mnt to /mnt via container)**
-917MB/s Copy from /mnt to / (1 100G file @1:49)
-1.01GB/s Copy from / to /mnt (1 100G file @1:31)
-
-**Azure Files (using Docker Plugin)**
-10MB/sec write from container to Azure Files (1 100G file @16m17s)
-10MB/sec write from Azure Files to container (1 100G file @16m17s)
-
-**Azure Files (Mounted inside container)**
-9MB/sec write from container to Azure Files (1 100G file @17m31s)
-6MB/sec write from Azure Files (1 100G file @25m20s)
-
-**AzCopy (no optimizations)**
-1GB/s transfer from container to Azure Blob (100 1G files @1m:21s)
-1.4GB/s transfer from Azure Blob to Container  (100 1G files @1m:06)
-
-400MB/s transfer from container to Azure Blob (Single 100G file @ 4m:18s)
-1GB/s transfer from Azure Blob to container (Single 100G file @ 1m:42s)
-
-**blobxfer (no optimizations)**
-147MB/s transfer from container to Azure Blob using AzCopy (100 1G files @11m:35s)
-974MB/s transfer from Azure Blob to Container using AzCopy (100 1G files @1m:45s)
-
-**blobfuse**
-203MB/sec write from container to blob (100 1G files @8m11s)
-502MB/sec write from blob to container (100 1G files @3m19s)
-206MB/sec write from container to blob (1 100G file @8m04s)
-595MB/sec write from blob to container (1 100G file @2m48s)
-
+**Native Baseline (Effectively copying from /mnt to /mnt via container)**  
+917MB/s Copy from /mnt to / (1 100G file @1:49)  
+1.01GB/s Copy from / to /mnt (1 100G file @1:31)  
+  
+**Azure Files (using Docker Plugin)**  
+10MB/sec write from container to Azure Files (1 100G file @16m17s)  
+10MB/sec write from Azure Files to container (1 100G file @16m17s)  
+  
+**Azure Files (Mounted inside container)**  
+9MB/sec write from container to Azure Files (1 100G file @17m31s)  
+6MB/sec write from Azure Files (1 100G file @25m20s)  
+  
+**AzCopy (no optimizations)**  
+1GB/s transfer from container to Azure Blob (100 1G files @1m:21s)  
+1.4GB/s transfer from Azure Blob to Container  (100 1G files @1m:06)  
+  
+400MB/s transfer from container to Azure Blob (Single 100G file @ 4m:18s)  
+1GB/s transfer from Azure Blob to container (Single 100G file @ 1m:42s)  
+  
+**blobxfer (no optimizations)**  
+147MB/s transfer from container to Azure Blob using AzCopy (100 1G files @11m:35s)  
+974MB/s transfer from Azure Blob to Container using AzCopy (100 1G files @1m:45s)  
+  
+**blobfuse**  
+203MB/sec write from container to blob (100 1G files @8m11s)  
+502MB/sec write from blob to container (100 1G files @3m19s)  
+206MB/sec write from container to blob (1 100G file @8m04s)  
+595MB/sec write from blob to container (1 100G file @2m48s)  
+  
 # References
 * [Azure Storage Scalability and Performance Targets](https://docs.microsoft.com/en-us/azure/storage/common/storage-scalability-targets)
 * [AzCopy on Linux Documentation](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux)
 * [Blobxfer Documentation](https://blobxfer.readthedocs.io/en/latest/)
 * [Azure Files Premium Annoucement](https://azure.microsoft.com/en-us/blog/premium-files-pushes-azure-files-limits-by-100x/)
+* [How to mount Blob storage as a file system with blobfuse](https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/storage/blobs/storage-how-to-mount-container-linux.md)
