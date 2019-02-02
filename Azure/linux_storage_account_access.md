@@ -57,6 +57,8 @@ When creating a storage account suitable for Azure Files. You'll need to ensure 
 * Access Tier: Hot
 
 #### Docker mount Azure Files with CIFS using Docker Plugin
+This requires using a docker plugin such as [netshare](https://github.com/ContainX/docker-volume-netshare). This is probably the best option out there as other options such as [AzureFile Docker Volume Driver](https://github.com/Azure/azurefile-dockervolumedriver) and [Docker Cloudstor](https://docs.docker.com/docker-for-azure/persistent-data-volumes/) seem to be [abandoned](https://github.com/docker/for-azure/issues/74).
+
 Replace:
 *  `mystorageaccount` with your storage account name 
 * The password with your storage account key.
